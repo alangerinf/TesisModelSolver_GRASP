@@ -163,7 +163,7 @@ public class CaseSolver {
             for(int v=0; v< pilaNodosRestantesPerVehicle.size(); v++) {
                 //System.out.println("******");
                 Node ultimoNodoRecorridoDeVehiculo = listaSolucionActual.get(v).get(listaSolucionActual.get(v).size()-1);
-                long currentTimeOfVehicle = modelCase.getVehiclesList().get(v).getCurrentTime();
+                double currentTimeOfVehicle = modelCase.getVehiclesList().get(v).getCurrentTime();
                 // modelCase.getTimeBetweenNodes()[(int)ultimoNodoRecorridoDeVehiculo.getId()] [(int)o.getId()]
                 
                 System.out.println("lista reducida de vehicle "+v+": sin filtro");
@@ -174,7 +174,7 @@ public class CaseSolver {
                  }
                 );
                 
-               pilaNodosRestantesPerVehicle.set(
+                pilaNodosRestantesPerVehicle.set(
                         v, 
                        sortListNodeByTime(ultimoNodoRecorridoDeVehiculo, pilaNodosRestantesPerVehicle.get(v))
                                .stream()
@@ -232,7 +232,6 @@ public class CaseSolver {
                 //elegimos uno al azar
                 if(!pilaNodosRestantesPerVehicle.get(i).isEmpty()) {
                     int ramdonPos = (int) RandomUtils.nextLong(pilaNodosRestantesPerVehicle.get(i).size());
-                    System.out.println("pos picked"+ramdonPos);
                     Node nodePicked = pilaNodosRestantesPerVehicle.get(i).get(ramdonPos);
                     pilaNodosRestantes.removeIf(t -> t.getId() == nodePicked.getId()); // removemos de la lista general
                     for(int j=i; j<pilaNodosRestantesPerVehicle.size(); j++) {
@@ -251,7 +250,7 @@ public class CaseSolver {
                 }
             }
             System.out.println("fin de iteracion");
-            printCurrentSolution();
+            printSolution(listaSolucionActual);
         }
         for (int v=0; v<listaSolucionActual.size(); v++) {
             List<Node> listaVehiculo = listaSolucionActual.get(v);
@@ -302,16 +301,25 @@ public class CaseSolver {
         return pilaNodosRestantes;
     }
     
-    public void printCurrentSolution() {
+    public void printSolution(List<List<Node>> solution) {
         System.out.println("============");
         System.out.println("************");
-        System.out.println("numero de listas: "+listaSolucionActual.size());
-        for(int v=0; v<listaSolucionActual.size(); v++) {
-            List<Node> nodesPerVehicle = listaSolucionActual.get(v);
+        System.out.println("numero de listas: "+solution.size());
+        for(int v=0; v<solution.size(); v++) {
+            List<Node> nodesPerVehicle = solution.get(v);
             System.out.println();
             System.out.println("v:"+v+": "+nodesPerVehicle.get(nodesPerVehicle.size()-1).getTimeArrived());
             for (int i=0; i<nodesPerVehicle.size(); i++) {
-                System.out.printf("n"+nodesPerVehicle.get(i).getId()+"("+nodesPerVehicle.get(i).getTimeArrived()+") ->");
+                System.out.printf("n"+nodesPerVehicle.get(i).getId()+"("+nodesPerVehicle.get(i).getTimeArrived()+")");
+                double at= 0;
+                if(i < nodesPerVehicle.size()-1 ) {
+                    Node nodeFrom = nodesPerVehicle.get(i);
+                    Node nodeTo = nodesPerVehicle.get(i+1);
+                    at = modelCase.getTimeBetweenNodes()[nodeFrom.getId()][nodeTo.getId()];
+                    System.out.printf(" <T"+at+"> ");
+                }
+                
+                
             }
         }
         
@@ -321,15 +329,49 @@ public class CaseSolver {
     }
 
     private void printSolutionAndSave() {
-        printCurrentSolution();
+        printSolution(listaSolucionActual);
         try{
             listaSolucionesElite.add(listaSolucionActual);
         }catch(Exception e) {
             System.out.println("error: "+e.toString());
         }
     }
-
-
+    
+    public void seleccionarMejorSolucion(){
+        List<List<Node>> mejorLista = null;
+        for(int i=0; i<listaSolucionesElite.size(); i++) {
+            List<List<Node>> solucionElite = listaSolucionesElite.get(i);
+            if(mejorLista == null) {
+                mejorLista = solucionElite;
+            }else {
+                mejorLista = getBestList(mejorLista, solucionElite);
+            }
+        }
+        
+        System.out.println("IMPRIMIENDO MEJOR SOLUCION*********************");
+        printSolution(mejorLista);
+        System.out.println("Tiempo recorrido: "+getTimeFromSolution(mejorLista));
+    }
+    
+    private double getTimeFromSolution(List<List<Node>> solution){
+        double at=0;
+        
+        for (int v=0; v< solution.size(); v++) {
+            List<Node> listNodosPerVehicle = solution.get(v);
+            for (int i=0; i<listNodosPerVehicle.size()-1; i++) {
+                Node nodeFrom = listNodosPerVehicle.get(i);
+                Node nodeTo = listNodosPerVehicle.get(i+1);
+                at = at + modelCase.getTimeBetweenNodes()[nodeFrom.getId()][nodeTo.getId()];
+            }
+        }
+        return at;
+    }
+    
+    
+    private List<List<Node>> getBestList (List<List<Node>> listalistaNodosA, List<List<Node>> listalistaNodosB) {
+        return (getTimeFromSolution(listalistaNodosA) < getTimeFromSolution(listalistaNodosB))? listalistaNodosA: listalistaNodosB;
+    }
+    
 }
 
 

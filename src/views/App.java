@@ -16,11 +16,13 @@ public class App {
    
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         caseImporter = new CaseImporter(
-                "C:\\Users\\Asus\\Desktop\\TesisModel\\data15.txt");
+                "C:\\Users\\Asus\\Desktop\\TesisModel\\data10.txt");
         ModelCase modelCase = caseImporter.extract();
         CaseSolver caseSolver = new CaseSolver(modelCase);
-        caseSolver.runIteration();
-       // caseSolver.runIteration();
+        for(int i=0; i<5; i++) {
+            caseSolver.runIteration();
+        }
+        caseSolver.seleccionarMejorSolucion();
     }
 
 }

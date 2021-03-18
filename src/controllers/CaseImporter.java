@@ -300,6 +300,7 @@ public class CaseImporter {
                         }
                         System.out.println(""+c+" "+r+"="+num);
                         double value = Double.parseDouble(num);
+                        System.out.println("parseado "+num+" "+value);
                         data[c][r] =  value;
                         if(isTheEnd) {
                             modelCase.setTimeBetweenNodes(data);

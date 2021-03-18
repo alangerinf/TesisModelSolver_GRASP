@@ -17,7 +17,7 @@ public class Node implements Comparable, Cloneable{
     private TimeFrame timeFrame;
     private int productDemand;
     private int residualDemand;
-    private long timeArrived;
+    private double timeArrived;
 
     public Node(int id,
                 Location location){
@@ -128,14 +128,14 @@ public class Node implements Comparable, Cloneable{
     /**
      * @return the timeArrived
      */
-    public long getTimeArrived() {
+    public double getTimeArrived() {
         return timeArrived;
     }
 
     /**
      * @param timeArrived the timeArrived to set
      */
-    public void setTimeArrived(long timeArrived) {
+    public void setTimeArrived(double timeArrived) {
         this.timeArrived = timeArrived;
     }
     

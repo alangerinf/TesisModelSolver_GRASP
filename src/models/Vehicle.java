@@ -16,7 +16,7 @@ public class Vehicle {
     private int trashCapacity;
     private int currentProductCapacityUsed;
     private int currentTrashCapacityUsed;
-    private long currentTime;
+    private double currentTime;
     
 
     public Vehicle() {
@@ -109,14 +109,14 @@ public class Vehicle {
     /**
      * @return the currentTime
      */
-    public long getCurrentTime() {
+    public double getCurrentTime() {
         return currentTime;
     }
 
     /**
      * @param currentTime the currentTime to set
      */
-    public void setCurrentTime(long currentTime) {
+    public void setCurrentTime(double currentTime) {
         this.currentTime = currentTime;
     }
 
