@@ -5,10 +5,12 @@
         <group>
             <file>file:/C:/Users/Asus/Documents/NetBeansProjects/TesisModelSolverGRASP/src/models/TimeFrame.java</file>
             <file>file:/C:/Users/Asus/Documents/NetBeansProjects/TesisModelSolverGRASP/src/models/Location.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/TesisModelSolverGRASP/src/views/App.java</file>
+            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/TesisModelSolverGRASP/src/models/Node.java</file>
             <file>file:/C:/Users/Asus/Documents/NetBeansProjects/TesisModelSolverGRASP/src/models/Vehicle.java</file>
+            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/TesisModelSolverGRASP/src/utils/RandomUtils.java</file>
             <file>file:/C:/Users/Asus/Documents/NetBeansProjects/TesisModelSolverGRASP/src/controllers/CaseImporter.java</file>
-            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/TesisModelSolverGRASP/src/models/ModelCase.java</file>
+            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/TesisModelSolverGRASP/src/models/Position.java</file>
+            <file>file:/C:/Users/Asus/Documents/NetBeansProjects/TesisModelSolverGRASP/src/controllers/CaseSolver.java</file>
         </group>
     </open-files>
 </project-private>
